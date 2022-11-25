@@ -10,6 +10,7 @@ For connect other, use:
 
 ### Exampe
 <pre>
+python3 ./main.py client localhost 5000
 Enter username: Andrey
 Now you can enter your messages and see others:
 [Stepan] Hello all!
