@@ -1,9 +1,9 @@
 # SocketChatServer
 
-Application for making char in terminal
+Application for making chat in terminal
 
 ### Usage
-For host your char, use:
+For host your chat, use:
 <pre>python3 ./main.py server {ip} {port}</pre>
 For connect other, use:
 <pre>python3 ./main.py client {ip} {port}</pre>
