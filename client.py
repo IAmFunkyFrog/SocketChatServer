@@ -1,6 +1,4 @@
-import locale
 import selectors
-import signal
 import socket
 import sys
 from threading import Thread
