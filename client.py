@@ -1,5 +1,6 @@
 import locale
 import selectors
+import signal
 import socket
 import sys
 from threading import Thread
@@ -9,6 +10,7 @@ from message import FULL_MESSAGE_WIDTH, Message
 from utils import recvall
 
 SELECTOR = selectors.DefaultSelector()
+APPLICATION_RUN = True
 
 
 def dispatch_server_event(conn, mask):
@@ -25,7 +27,9 @@ def dispatch_server_event(conn, mask):
 
 def selector_cycle():
     while True:
-        events = SELECTOR.select()
+        events = SELECTOR.select(0.1)
+        if not APPLICATION_RUN:
+            return
         for key, mask in events:
             callback = key.data
             callback(key.fileobj, mask)
@@ -57,7 +61,12 @@ def client(host: str | int, port: int):
 
     print("Now you can enter your messages and see others:")
     while True:
-        content = input()
+        try:
+            content = input()
+        except KeyboardInterrupt:
+            global APPLICATION_RUN
+            APPLICATION_RUN = False
+            exit(0)
         try:
             sock.sendall(Message(username, content).encode())
         except ValueError as err:
